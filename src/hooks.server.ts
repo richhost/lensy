@@ -13,12 +13,12 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	event.locals.auth = createAuth(event.platform.env.DB);
 
 	const { auth } = event.locals;
-	const session = await auth.api.getSession({ headers: event.request.headers });
+	// const session = await auth.api.getSession({ headers: event.request.headers });
 
-	if (session) {
-		event.locals.session = session.session;
-		event.locals.user = session.user;
-	}
+	// if (session) {
+	// 	event.locals.session = session.session;
+	// 	event.locals.user = session.user;
+	// }
 
 	return svelteKitHandler({ event, resolve, auth, building });
 };
