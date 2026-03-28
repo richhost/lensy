@@ -2,9 +2,7 @@
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "lensy",
 	"compatibility_date": "2026-03-28",
-	"compatibility_flags": [
-		"nodejs_als"
-	],
+	"compatibility_flags": ["nodejs_als"],
 	"main": ".svelte-kit/cloudflare/_worker.js",
 	"assets": {
 		"binding": "ASSETS",
@@ -22,7 +20,8 @@
 		{
 			"binding": "DB",
 			"database_name": "lenys",
-			"database_id": "2c323e0e-cf59-464e-822e-b12f7ac4ee01"
+			"database_id": "2c323e0e-cf59-464e-822e-b12f7ac4ee01",
+			"migrations_dir": "./drizzle"
 		}
 	]
 }
