@@ -18,7 +18,7 @@
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"db:local": "bunx wrangler d1 migrations apply DB --local",
-		"d1:remote": "bunx wrangler d1 migrations apply DB --remote",
+		"db:remote": "bunx wrangler d1 migrations apply DB --remote",
 		"auth:schema": "better-auth generate --config src/lib/server/auth.ts --output src/lib/server/db/auth.schema.ts --yes"
 	},
 	"devDependencies": {
