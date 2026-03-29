@@ -10,6 +10,9 @@
 	},
 	"workers_dev": true,
 	"preview_urls": true,
+	"vars": {
+		"R2_PUBLIC_URL": ""
+	},
 	"r2_buckets": [
 		{
 			"bucket_name": "lenys",
