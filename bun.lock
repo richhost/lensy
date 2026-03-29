@@ -11,6 +11,7 @@
         "@sveltejs/adapter-cloudflare": "^7.2.8",
         "@sveltejs/kit": "^2.55.0",
         "@sveltejs/vite-plugin-svelte": "^7.0.0",
+        "@tabler/icons-svelte": "^3.41.0",
         "@tabler/icons-svelte-runes": "^3.41.0",
         "@tailwindcss/typography": "^0.5.19",
         "@tailwindcss/vite": "^4.2.2",
@@ -349,6 +350,8 @@
     "@swc/helpers": ["@swc/helpers@0.5.20", "", { "dependencies": { "tslib": "^2.8.0" } }, "sha512-2egEBHUMasdypIzrprsu8g+OEVd7Vp2MM3a2eVlM/cyFYto0nGz5BX5BTgh/ShZZI9ed+ozEq+Ngt+rgmUs8tw=="],
 
     "@tabler/icons": ["@tabler/icons@3.41.0", "", {}, "sha512-arlig0nkaC9UGqTZuT1MMZepX29t3Ysx5HSy2UvmR+CZrhlNxZrCM6Z4qYBoaIO+2ICZykttjBCSpf+p/t0H3w=="],
+
+    "@tabler/icons-svelte": ["@tabler/icons-svelte@3.41.0", "", { "dependencies": { "@tabler/icons": "3.41.0" }, "peerDependencies": { "svelte": ">=3 <6 || >=5.0.0-next.0" } }, "sha512-jlPV2z+dslkgTva49WGgZ3B4CgzPtxeKU2ixmp2WVk70dzGA2AqTr+X4wqIUhZwCJPaZ/VFO5hsALetBZQgIcQ=="],
 
     "@tabler/icons-svelte-runes": ["@tabler/icons-svelte-runes@3.41.0", "", { "dependencies": { "@tabler/icons": "3.41.0" }, "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-CMYfhlLixbVKrHvuHE0T/4UkM3EZ19swacKjQU0ylCNAEfoyImm88io0mHCgYvi7i8lisXx0Y5PLvWoM3xLkmg=="],
 
