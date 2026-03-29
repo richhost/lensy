@@ -3,6 +3,8 @@
 	import { deletePhoto, updatePhoto } from '$lib/remotes/photos.remote';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import { Textarea } from '$lib/components/ui/textarea';
+	import { Switch } from '$lib/components/ui/switch';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import {
@@ -612,21 +614,15 @@
 						</div>
 						<div class="flex flex-col gap-1">
 							<label for="edit-desc" class="text-xs text-muted-foreground">Description</label>
-							<textarea
+							<Textarea
 								id="edit-desc"
 								bind:value={eDescription}
 								placeholder="Add a description…"
-								rows="3"
-								class="w-full resize-none rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:opacity-50"
-							></textarea>
+								rows={3}
+							/>
 						</div>
 						<div class="flex items-center gap-2">
-							<input
-								id="edit-visible"
-								type="checkbox"
-								bind:checked={eIsVisible}
-								class="size-3.5 rounded"
-							/>
+							<Switch id="edit-visible" bind:checked={eIsVisible} size="sm" />
 							<label for="edit-visible" class="cursor-pointer text-xs">Visible</label>
 						</div>
 					</div>
