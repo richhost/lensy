@@ -6,7 +6,6 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Switch } from '$lib/components/ui/switch';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import * as Sheet from '$lib/components/ui/sheet';
 	import {
 		IconPhoto,
 		IconUpload,
@@ -587,13 +586,13 @@
 	</Dialog.Content>
 </Dialog.Root>
 
-<!-- ── Edit sheet ─────────────────────────────────────────────────────────────── -->
-<Sheet.Root bind:open={editOpen}>
-	<Sheet.Content class="flex flex-col gap-0 p-0 sm:max-w-md">
-		<Sheet.Header class="border-b border-border px-5 py-4">
-			<Sheet.Title>Edit photo</Sheet.Title>
-			<Sheet.Description>Update EXIF metadata and tags.</Sheet.Description>
-		</Sheet.Header>
+<!-- ── Edit dialog ────────────────────────────────────────────────────────────── -->
+<Dialog.Root bind:open={editOpen}>
+	<Dialog.Content class="h-[90dvh] flex flex-col gap-0 p-0 sm:max-w-lg">
+		<Dialog.Header class="border-b border-border px-5 py-4">
+			<Dialog.Title>Edit photo</Dialog.Title>
+			<Dialog.Description>Update EXIF metadata and tags.</Dialog.Description>
+		</Dialog.Header>
 
 		{#if editingPhoto}
 			<div class="flex-1 space-y-6 overflow-y-auto px-4 py-5 sm:px-5">
@@ -721,7 +720,7 @@
 				{/if}
 			</div>
 
-			<Sheet.Footer class="border-t border-border px-5 py-4">
+			<Dialog.Footer class="border-t border-border px-5 py-4">
 				<Button variant="outline" onclick={() => (editOpen = false)} disabled={editSaving}>
 					Cancel
 				</Button>
@@ -731,10 +730,10 @@
 					{/if}
 					Save
 				</Button>
-			</Sheet.Footer>
+			</Dialog.Footer>
 		{/if}
-	</Sheet.Content>
-</Sheet.Root>
+	</Dialog.Content>
+</Dialog.Root>
 
 <!-- ── Delete dialog ─────────────────────────────────────────────────────────── -->
 <Dialog.Root bind:open={deleteOpen}>
