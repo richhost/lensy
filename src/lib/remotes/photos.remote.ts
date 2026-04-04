@@ -14,6 +14,15 @@ export const getPhotos = query(async () => {
 	});
 });
 
+export const getPhoto = query(v.string(), async (id: string) => {
+	const event = getRequestEvent();
+	const db = getDb(event.platform!.env.DB);
+	return db.query.photos.findFirst({
+		with: { tags: { with: { tag: true } } },
+		where: eq(photos.id, id)
+	});
+});
+
 const nullishString = v.nullish(v.string());
 const nullishInt = v.nullish(v.pipe(v.number(), v.integer()));
 

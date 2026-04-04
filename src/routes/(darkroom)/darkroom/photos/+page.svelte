@@ -588,7 +588,7 @@
 
 <!-- ── Edit dialog ────────────────────────────────────────────────────────────── -->
 <Dialog.Root bind:open={editOpen}>
-	<Dialog.Content class="h-[90dvh] flex flex-col gap-0 p-0 sm:max-w-lg">
+	<Dialog.Content class="flex h-[90dvh] flex-col gap-0 p-0 sm:max-w-lg">
 		<Dialog.Header class="border-b border-border px-5 py-4">
 			<Dialog.Title>Edit photo</Dialog.Title>
 			<Dialog.Description>Update EXIF metadata and tags.</Dialog.Description>
