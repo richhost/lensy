@@ -35,7 +35,7 @@
 				<span class="text-black/30">in Light.</span>
 			</h1>
 			<p class="mt-8 max-w-lg text-lg leading-relaxed font-light text-black/50">
-				An editorial curation of uncompressed reality. Capturing brutalist horizons, delicate glass
+				An editorial curation of visual storytelling. Capturing brutalist horizons, delicate glass
 				layers, and the profound depth of human stillness.
 			</p>
 		</section>
