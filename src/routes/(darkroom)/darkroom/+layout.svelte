@@ -84,7 +84,13 @@
 	</Sidebar.Root>
 
 	<Sidebar.Inset>
-		<Sidebar.Trigger class="absolute top-2 left-2 z-10 md:hidden" />
+		<header class="flex h-14 shrink-0 items-center gap-2 border-b border-border/40 bg-background/95 px-4 backdrop-blur md:hidden">
+			<Sidebar.Trigger class="-ml-2" />
+			<div class="flex items-center gap-2">
+				<IconAperture size={16} />
+				<span class="text-sm font-medium tracking-tight">Darkroom</span>
+			</div>
+		</header>
 		<div class="flex flex-1 flex-col overflow-auto">
 			{@render children()}
 		</div>
