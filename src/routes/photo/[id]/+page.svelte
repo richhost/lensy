@@ -2,7 +2,7 @@
 	import { fade, blur } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
 
@@ -30,7 +30,10 @@
 				.filter(Boolean)
 				.join(' · ')
 	);
-	let siteUrl = $derived($page.url.origin);
+	let siteUrl = $derived(page.url.origin);
+	let ogImageUrl = $derived(
+		`${siteUrl}/og?title=${encodeURIComponent(photoTitle)}&description=${encodeURIComponent(photoDescription)}&image=${encodeURIComponent(photo.url)}`
+	);
 
 	// Handle keyboard navigation
 	function handleKeydown(e: KeyboardEvent) {
@@ -53,13 +56,13 @@
 	<meta name="description" content={photoDescription} />
 	<meta property="og:title" content={pageTitle} />
 	<meta property="og:description" content={photoDescription} />
-	<meta property="og:image" content={photo.url} />
-	<meta property="og:image:width" content={String(photo.width)} />
-	<meta property="og:image:height" content={String(photo.height)} />
+	<meta property="og:image" content={ogImageUrl} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 	<meta property="og:type" content="article" />
 	<meta name="twitter:title" content={pageTitle} />
 	<meta name="twitter:description" content={photoDescription} />
-	<meta name="twitter:image" content={photo.url} />
+	<meta name="twitter:image" content={ogImageUrl} />
 
 	<!-- Structured Data: ImageObject -->
 	{@html `<script type="application/ld+json">${JSON.stringify({
