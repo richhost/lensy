@@ -4,7 +4,7 @@
 
 	let { data }: { data: PageData } = $props();
 
-	const pageTitle = 'Lensy — Editorial Photography Gallery';
+	const pageTitle = 'Abiee — Editorial Photography Gallery';
 	const pageDescription =
 		'Shapes in Light — An editorial curation of visual storytelling. Capturing brutalist horizons, delicate glass layers, and the profound depth of human stillness.';
 

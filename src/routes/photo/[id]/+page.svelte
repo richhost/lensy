@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import type { PageData } from './$types';
 	import { page } from '$app/state';
+	import ExifInfo from '$lib/components/exif-info.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -14,8 +15,8 @@
 	let isZoomed = $state(false);
 
 	// SEO derived values
-	let photoTitle = $derived(photo.title || 'Untitled');
-	let pageTitle = $derived(`${photoTitle} — Lensy`);
+	let photoTitle = $derived(photo.title || 'Abiee');
+	let pageTitle = $derived(`${photoTitle}`);
 	let photoDescription = $derived(
 		photo.description ||
 			[
@@ -199,65 +200,5 @@
 	{/if}
 
 	<!-- Floating Bottom EXIF Info (Camarts style) -->
-	{#if !isZoomed}
-		<div
-			transition:fade={{ duration: 300 }}
-			class="pointer-events-none absolute bottom-8 left-1/2 z-50 grid w-[90%] max-w-fit -translate-x-1/2 place-items-center [&>*]:col-start-1 [&>*]:row-start-1"
-		>
-			{#key photo.id}
-				<div class="flex flex-col items-center justify-center gap-3">
-					<!-- EXIF Pill -->
-					<div
-						class="pointer-events-auto flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/40 bg-white/70 px-5 py-3 text-[10px] font-medium tracking-wide text-[#111] shadow-[0_16px_48px_rgba(0,0,0,0.08)] backdrop-blur-2xl transition-all hover:bg-white/80 hover:shadow-[0_24px_64px_rgba(0,0,0,0.12)] sm:gap-4 sm:px-6 sm:text-[11px]"
-						in:fade={{ duration: 600, delay: 400 }}
-						out:fade={{ duration: 200 }}
-					>
-						<div class="flex items-center gap-1.5 opacity-80">
-							<svg
-								viewBox="0 0 24 24"
-								fill="none"
-								class="h-3.5 w-3.5 scale-110"
-								stroke="currentColor"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="1.5"
-									d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-								/><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="1.5"
-									d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-								/></svg
-							>
-							<span class="hidden sm:inline">{photo.make}</span>
-							{photo.model}
-						</div>
-						{#if photo.lens}
-							<div class="h-3 w-px bg-black/10"></div>
-							<div class="flex items-center gap-1.5 opacity-80">
-								<span class="max-w-30 truncate sm:max-w-60" title={photo.lens}>{photo.lens}</span>
-							</div>
-						{/if}
-						<div class="h-3 w-px bg-black/10"></div>
-						<div class="flex items-center gap-1.5 opacity-80">
-							<span>{photo.focalLength}mm</span>
-						</div>
-						<div class="h-3 w-px bg-black/10"></div>
-						<div class="flex items-center gap-1.5 opacity-80">
-							<span>{photo.aperture}</span>
-						</div>
-						<div class="h-3 w-px bg-black/10"></div>
-						<div class="flex items-center gap-1.5 opacity-80">
-							<span>{photo.shutterSpeed}</span>
-						</div>
-						<div class="h-3 w-px bg-black/10"></div>
-						<div class="flex items-center gap-1.5 opacity-80">
-							<span>ISO {photo.iso}</span>
-						</div>
-					</div>
-				</div>
-			{/key}
-		</div>
-	{/if}
+	<ExifInfo {photo} {isZoomed} />
 </div>
