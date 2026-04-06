@@ -13,6 +13,25 @@
 
 	let isZoomed = $state(false);
 
+	// SEO derived values
+	let photoTitle = $derived(photo.title || 'Untitled');
+	let pageTitle = $derived(`${photoTitle} — Lensy`);
+	let photoDescription = $derived(
+		photo.description ||
+			[
+				photo.make,
+				photo.model,
+				photo.lens,
+				photo.focalLength ? `${photo.focalLength}mm` : null,
+				photo.aperture,
+				photo.shutterSpeed,
+				photo.iso ? `ISO ${photo.iso}` : null
+			]
+				.filter(Boolean)
+				.join(' · ')
+	);
+	let siteUrl = $derived($page.url.origin);
+
 	// Handle keyboard navigation
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === 'ArrowRight') {
@@ -28,6 +47,54 @@
 		}
 	}
 </script>
+
+<svelte:head>
+	<title>{pageTitle}</title>
+	<meta name="description" content={photoDescription} />
+	<meta property="og:title" content={pageTitle} />
+	<meta property="og:description" content={photoDescription} />
+	<meta property="og:image" content={photo.url} />
+	<meta property="og:image:width" content={String(photo.width)} />
+	<meta property="og:image:height" content={String(photo.height)} />
+	<meta property="og:type" content="article" />
+	<meta name="twitter:title" content={pageTitle} />
+	<meta name="twitter:description" content={photoDescription} />
+	<meta name="twitter:image" content={photo.url} />
+
+	<!-- Structured Data: ImageObject -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'ImageObject',
+		name: photoTitle,
+		description: photoDescription,
+		contentUrl: photo.url,
+		width: photo.width,
+		height: photo.height,
+		...(photo.takenAt && { dateCreated: new Date(photo.takenAt).toISOString() }),
+		exifData: [
+			photo.make && { '@type': 'PropertyValue', name: 'cameraMake', value: photo.make },
+			photo.model && { '@type': 'PropertyValue', name: 'cameraModel', value: photo.model },
+			photo.lens && { '@type': 'PropertyValue', name: 'lens', value: photo.lens },
+			photo.focalLength && {
+				'@type': 'PropertyValue',
+				name: 'focalLength',
+				value: `${photo.focalLength}mm`
+			},
+			photo.aperture && { '@type': 'PropertyValue', name: 'fNumber', value: photo.aperture },
+			photo.iso && { '@type': 'PropertyValue', name: 'isoSpeed', value: String(photo.iso) },
+			photo.shutterSpeed && {
+				'@type': 'PropertyValue',
+				name: 'exposureTime',
+				value: photo.shutterSpeed
+			}
+		].filter(Boolean),
+		isPartOf: {
+			'@type': 'ImageGallery',
+			name: 'Lensy',
+			url: siteUrl
+		}
+	})}</script>`}
+</svelte:head>
 
 <svelte:window onkeydown={handleKeydown} />
 

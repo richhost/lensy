@@ -3,7 +3,40 @@
 	import { fade, fly } from 'svelte/transition';
 
 	let { data }: { data: PageData } = $props();
+
+	const pageTitle = 'Lensy — Editorial Photography Gallery';
+	const pageDescription =
+		'Shapes in Light — An editorial curation of visual storytelling. Capturing brutalist horizons, delicate glass layers, and the profound depth of human stillness.';
 </script>
+
+<svelte:head>
+	<title>{pageTitle}</title>
+	<meta name="description" content={pageDescription} />
+	<meta property="og:title" content={pageTitle} />
+	<meta property="og:description" content={pageDescription} />
+	{#if data.photos.length > 0}
+		<meta property="og:image" content={data.photos[0].url} />
+	{/if}
+	<meta name="twitter:title" content={pageTitle} />
+	<meta name="twitter:description" content={pageDescription} />
+	{#if data.photos.length > 0}
+		<meta name="twitter:image" content={data.photos[0].url} />
+	{/if}
+
+	<!-- Structured Data: ImageGallery -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'ImageGallery',
+		name: 'Lensy — Shapes in Light',
+		description: pageDescription,
+		image: data.photos.slice(0, 5).map((p) => ({
+			'@type': 'ImageObject',
+			contentUrl: p.url,
+			name: p.title || 'Untitled',
+			description: p.description || `${p.make || ''} ${p.model || ''} · ${p.focalLength}mm ${p.aperture}`.trim()
+		}))
+	})}</script>`}
+</svelte:head>
 
 <div
 	class="min-h-dvh overflow-x-hidden bg-[#FDFBF7] font-sans text-[#111] antialiased selection:bg-black/10"
@@ -41,7 +74,7 @@
 		</section>
 
 		<!-- Ethereal Asymmetrical Bento Grid (Masonry) -->
-		<section class="mt-32 columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4">
+		<section class="mt-32 columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4" aria-label="Photography collection">
 			{#each data.photos as photo, i}
 				<div
 					class="group relative mb-6 break-inside-avoid overflow-hidden rounded-[2rem] border border-black/5 bg-white p-1.5 ring-1 ring-black/5 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/5"

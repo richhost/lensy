@@ -113,7 +113,7 @@
 		{#if photo}
 			<div class="flex-1 space-y-6 overflow-y-auto px-4 py-5 sm:px-5">
 				<!-- Thumbnail -->
-				<div class="aspect-[3/2] overflow-hidden rounded-lg bg-muted/40">
+				<div class="aspect-3/2 overflow-hidden rounded-lg bg-muted/40">
 					<img src={photo.url} alt="" class="size-full object-cover" />
 				</div>
 

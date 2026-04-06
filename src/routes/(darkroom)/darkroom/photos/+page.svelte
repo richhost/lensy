@@ -95,7 +95,7 @@
 		<div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 			{#each photoList as photo (photo.id)}
 				<div class="group relative overflow-hidden rounded-lg bg-muted/40">
-					<div class="aspect-[3/2] overflow-hidden">
+					<div class="aspect-3/2 overflow-hidden">
 						<img
 							src={photo.url}
 							alt={photo.title ?? ''}

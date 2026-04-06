@@ -1,3 +1,9 @@
-# allow crawling everything by default
+# Lensy — Photography Gallery
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /darkroom
+Disallow: /login
+Disallow: /register
+
+# Sitemap
+Sitemap: https://lensy.abiee.com/sitemap.xml
