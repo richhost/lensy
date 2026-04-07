@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { IconMenu, IconAperture, IconClock, IconFocus2 } from '@tabler/icons-svelte-runes';
 	import * as Drawer from '$lib/components/ui/drawer';
-	import { pushState } from '$app/navigation';
+	import { pushState, replaceState } from '$app/navigation';
 	import { page } from '$app/state';
 
 	let { photo, isZoomed }: { photo: any; isZoomed: boolean } = $props();
@@ -15,7 +15,7 @@
 
 	function onOpenChange(value: boolean) {
 		if (!value && (page.state as App.PageState).exifDrawer) {
-			history.back();
+			replaceState('', {});
 		}
 	}
 </script>
