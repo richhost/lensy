@@ -7,6 +7,10 @@
 
 	let { photo, isZoomed }: { photo: any; isZoomed: boolean } = $props();
 
+	let tags = $derived(
+		(photo.tags as { tag: { id: string; name: string; slug: string } }[] | undefined) ?? []
+	);
+
 	let open = $derived(!!(page.state as App.PageState).exifDrawer);
 
 	function openDrawer() {
@@ -61,6 +65,20 @@
 						<div class="h-3 w-px bg-black/15"></div>
 						<span class="max-w-48 truncate text-black/50" title={photo.lens}>{photo.lens}</span>
 					{/if}
+					{#if tags.length > 0}
+						<div class="h-3 w-px bg-black/15"></div>
+						<div class="flex items-center gap-1.5">
+							{#each tags as { tag }}
+								<a
+									href="/?tag={tag.slug}"
+									class="rounded-full border border-black/15 px-2.5 py-0.5 text-[10px] font-medium text-black/40 transition-colors hover:border-black/30 hover:text-black/60"
+									onclick={(e) => e.stopPropagation()}
+								>
+									{tag.name}
+								</a>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			</div>
 
@@ -86,6 +104,18 @@
 								>Metadata</Drawer.Title
 							>
 						</Drawer.Header>
+						{#if tags.length > 0}
+							<div class="flex flex-wrap gap-1.5 px-4 pb-4">
+								{#each tags as { tag }}
+									<a
+										href="/?tag={tag.slug}"
+										class="rounded-full border border-black/15 bg-white/60 px-3 py-1 text-[11px] font-medium text-black/50 transition-colors hover:bg-white"
+									>
+										{tag.name}
+									</a>
+								{/each}
+							</div>
+						{/if}
 						<div class="grid grid-cols-2 gap-3 px-4 pb-10">
 							<!-- Aperture -->
 							<div class="flex aspect-square flex-col justify-between rounded-2xl bg-white p-5">

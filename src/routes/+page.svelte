@@ -11,6 +11,24 @@
 	let ogImageUrl = $derived(
 		`${page.url.origin}/og?title=${encodeURIComponent(pageTitle)}&description=${encodeURIComponent(pageDescription)}${data.photos.length > 0 ? `&image=${encodeURIComponent(data.photos[0].url)}` : ''}`
 	);
+
+	// Tag filtering
+	type TagItem = PageData['tags'][number];
+	type PhotoItem = PageData['photos'][number];
+	type PhotoTagItem = PhotoItem['tags'][number];
+
+	let activeTag = $derived(page.url.searchParams.get('tag'));
+	let tagsWithPhotos = $derived(data.tags.filter((t: TagItem) => t.photoCount > 0));
+	let filteredPhotos = $derived(
+		activeTag
+			? data.photos.filter((p: PhotoItem) =>
+					p.tags.some((t: PhotoTagItem) => t.tag.slug === activeTag)
+				)
+			: data.photos
+	);
+	let activeTagName = $derived(
+		activeTag ? tagsWithPhotos.find((t: TagItem) => t.slug === activeTag)?.name : null
+	);
 </script>
 
 <svelte:head>
@@ -32,7 +50,7 @@
 		'@type': 'ImageGallery',
 		name: 'Lensy — Shapes in Light',
 		description: pageDescription,
-		image: data.photos.slice(0, 5).map((p) => ({
+		image: data.photos.slice(0, 5).map((p: PageData['photos'][number]) => ({
 			'@type': 'ImageObject',
 			contentUrl: p.url,
 			name: p.title || 'Untitled',
@@ -78,12 +96,55 @@
 			</p>
 		</section>
 
+		<!-- Tag Filter Bar -->
+		{#if tagsWithPhotos.length > 0}
+			<nav
+				class="mt-16 flex animate-in flex-wrap items-center gap-2 delay-300 duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] fill-mode-both fade-in slide-in-from-bottom-8"
+				aria-label="Filter by tag"
+			>
+				<a
+					href="/"
+					class="inline-flex items-center rounded-full border px-4 py-1.5 text-[11px] font-medium tracking-[0.08em] transition-all duration-300 {!activeTag
+						? 'border-black/80 bg-black text-white'
+						: 'border-black/10 bg-black/5 text-black/50 hover:border-black/20 hover:text-black/70'}"
+				>
+					All
+				</a>
+				{#each tagsWithPhotos as tag}
+					<a
+						href="/?tag={tag.slug}"
+						class="inline-flex items-center rounded-full border px-4 py-1.5 text-[11px] font-medium tracking-[0.08em] transition-all duration-300 {activeTag ===
+						tag.slug
+							? 'border-black/80 bg-black text-white'
+							: 'border-black/10 bg-black/5 text-black/50 hover:border-black/20 hover:text-black/70'}"
+					>
+						{tag.name}
+						<span
+							class="ml-1.5 text-[10px] {activeTag === tag.slug
+								? 'text-white/50'
+								: 'text-black/30'}">{tag.photoCount}</span
+						>
+					</a>
+				{/each}
+			</nav>
+		{/if}
+
+		<!-- Active filter indicator -->
+		{#if activeTagName}
+			<div class="mt-10 flex items-center gap-3">
+				<h2 class="text-2xl font-medium tracking-tight">{activeTagName}</h2>
+				<span class="text-sm text-black/40">{filteredPhotos.length} photos</span>
+			</div>
+		{/if}
+
 		<!-- Ethereal Asymmetrical Bento Grid (Masonry) -->
 		<section
-			class="mt-32 columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4"
+			class="mt-32 columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 {activeTag
+				? 'mt-10!'
+				: ''}"
 			aria-label="Photography collection"
 		>
-			{#each data.photos as photo, i}
+			{#each filteredPhotos as photo, i (photo.id)}
 				<div
 					class="group relative mb-6 break-inside-avoid overflow-hidden rounded-[2rem] border border-black/5 bg-white p-1.5 ring-1 ring-black/5 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/5"
 					style="animation: fade-in-up 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards; animation-delay: {i *
@@ -116,6 +177,17 @@
 									<div class="h-1 w-1 rounded-full bg-black/20"></div>
 									<span>{photo.aperture}</span>
 								</div>
+								{#if photo.tags.length > 0}
+									<div class="mt-2 flex flex-wrap gap-1">
+										{#each photo.tags as { tag }}
+											<span
+												class="rounded-full border border-black/10 bg-white/60 px-2 py-0.5 text-[10px] font-medium tracking-wide text-black/50 backdrop-blur-sm"
+											>
+												{tag.name}
+											</span>
+										{/each}
+									</div>
+								{/if}
 							</div>
 						</div>
 
