@@ -10,12 +10,18 @@ export const load: PageServerLoad = async ({ params }) => {
 	}
 
 	const index = allPhotos.findIndex((p) => p.id === params.id);
-	const prevId = index > 0 ? allPhotos[index - 1].id : allPhotos[allPhotos.length - 1].id;
-	const nextId = index < allPhotos.length - 1 ? allPhotos[index + 1].id : allPhotos[0].id;
+	const prevIndex = index > 0 ? index - 1 : allPhotos.length - 1;
+	const nextIndex = index < allPhotos.length - 1 ? index + 1 : 0;
+	const prevId = allPhotos[prevIndex].id;
+	const nextId = allPhotos[nextIndex].id;
+	const prevPhoto = allPhotos[prevIndex];
+	const nextPhoto = allPhotos[nextIndex];
 
 	return {
 		photo,
 		prevId,
-		nextId
+		nextId,
+		prevPhoto,
+		nextPhoto
 	};
 };
